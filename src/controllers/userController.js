@@ -79,6 +79,24 @@ export const deleteUser = async (req, res) => {
   }
 };
 
+export const getUserById = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const user = await prisma.user.findUnique({
+      where: { id: Number(id) },
+      select: { id: true, email: true, name: true, avatar: true, createdAt: true },
+    });
+
+    if (!user) {
+      return res.status(404).json({ status: 'error', message: 'User not found' });
+    }
+
+    res.json({ status: 'success', data: user });
+  } catch (error) {
+    res.status(500).json({ status: 'error', message: error.message });
+  }
+};
+
 export const getUsers = async (req, res) => {
   try {
     const users = await prisma.user.findMany({
