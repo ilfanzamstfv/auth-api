@@ -17,6 +17,7 @@ model user {
   name      String?
   password  String?
   googleId  String?  @unique
+  githubId  String?  @unique
   avatar    String?
   createdAt DateTime @default(now())
 }

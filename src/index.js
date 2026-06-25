@@ -3,7 +3,7 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import passport from './config/passport.js';
 import { createUser, loginUser, deleteUser, getUserById, getUsers } from './controllers/userController.js';
-import { googleCallback } from './controllers/authController.js';
+import { googleCallback, githubCallback } from './controllers/authController.js';
 
 // Konfigurasi dotenv agar bisa membaca file .env
 dotenv.config();
@@ -28,9 +28,16 @@ app.get('/api/user', getUsers);
 app.get('/api/user/:id', getUserById);
 app.delete('/api/user/:id', deleteUser);
 
-// Auth Routes
+// === Auth Routes ===
+
+// google 
 app.get('/api/auth/google', passport.authenticate('google', { scope: ['profile', 'email'], session: false }));
 app.get('/api/auth/google/callback', passport.authenticate('google', { failureRedirect: '/login', session: false }), googleCallback);
+
+// github
+app.get('/api/auth/github', passport.authenticate('github', { scope: ['user:email', 'user:profile'], session: false }));
+app.get('/api/auth/github/callback', passport.authenticate('github', { failureRedirect: '/login', session: false }), githubCallback);
+
 
 // Jalankan Server
 app.listen(PORT, () => {
