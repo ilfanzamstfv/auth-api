@@ -12,12 +12,14 @@ datasource db {
 }
 
 model user {
-  id        Int      @id @default(autoincrement())
-  email     String   @unique
-  name      String?
-  password  String?
-  googleId  String?  @unique
-  githubId  String?  @unique
-  avatar    String?
-  createdAt DateTime @default(now())
+  id                 Int       @id @default(autoincrement())
+  email              String    @unique
+  name               String?
+  password           String?
+  googleId           String?   @unique
+  githubId           String?   @unique
+  avatar             String?
+  createdAt          DateTime  @default(now())
+  resetPasswordCode  String?
+  resetCodeExpiresAt DateTime?
 }

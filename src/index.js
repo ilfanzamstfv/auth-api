@@ -2,7 +2,16 @@ import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import passport from './config/passport.js';
-import { createUser, loginUser, deleteUser, getUserById, getUsers } from './controllers/userController.js';
+import {
+    createUser,
+    loginUser,
+    deleteUser,
+    getUserById,
+    getUsers,
+    forgotPassword,
+    verifyResetCode,
+    resetPassword
+} from './controllers/userController.js';
 import { googleCallback, githubCallback } from './controllers/authController.js';
 
 // Konfigurasi dotenv agar bisa membaca file .env
@@ -27,6 +36,9 @@ app.post('/api/login', loginUser);
 app.get('/api/user', getUsers);
 app.get('/api/user/:id', getUserById);
 app.delete('/api/user/:id', deleteUser);
+app.post('/api/forgot-password', forgotPassword);
+app.post('/api/verify-reset-code', verifyResetCode);
+app.post('/api/reset-password', resetPassword);
 
 // === Auth Routes ===
 
